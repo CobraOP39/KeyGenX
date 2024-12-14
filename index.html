@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(45deg, #2a3c67, #1d2a45);
+            background-size: 400% 400%;
+            animation: gradientAnimation 6s ease infinite;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            overflow: hidden;
+            transition: background 0.5s ease;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 30px;
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #aaa;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        /* Password Container */
+        .password-container {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 450px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .password-container:hover {
+            transform: scale(1.05);
+        }
+
+        .password-container input {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background-color: #333;
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease;
+        }
+
+        .password-container input:focus {
+            outline: none;
+            background-color: #555;
+        }
+
+        .generate-btn,
+        .copy-btn {
+            background-color: #4e73df;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 1.2rem;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+            border: none;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .generate-btn:hover,
+        .copy-btn:hover {
+            background-color: #2e5bb3;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+            transform: scale(1.05);
+        }
+
+        .generate-btn:active,
+        .copy-btn:active {
+            background-color: #1d4b96;
+        }
+
+        /* Animations */
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            .generate-btn {
+                font-size: 1rem;
+                padding: 12px 24px;
+            }
+
+            .password-container {
+                width: 100%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Password Generator</h1>
+    <p>Generate strong and secure passwords with ease</p>
+    
+    <div class="password-container">
+        <input type="text" id="passwordOutput" placeholder="Your password will appear here..." readonly>
+        <button class="generate-btn" id="generateBtn">Generate Password</button>
+        <button class="copy-btn" id="copyBtn">Copy to Clipboard</button>
+    </div>
+
+    <script>
+        const generateBtn = document.getElementById('generateBtn');
+        const passwordOutput = document.getElementById('passwordOutput');
+        const copyBtn = document.getElementById('copyBtn');
+
+        const generatePassword = () => {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+';
+            let password = '';
+            const passwordLength = 16;
+
+            for (let i = 0; i < passwordLength; i++) {
+                const randomIndex = Math.floor(Math.random() * characters.length);
+                password += characters[randomIndex];
+            }
+
+            passwordOutput.value = password;
+        };
+
+        const copyPassword = () => {
+            passwordOutput.select();
+            document.execCommand('copy');
+        };
+
+        generateBtn.addEventListener('click', generatePassword);
+        copyBtn.addEventListener('click', copyPassword);
+    </script>
+
+</body>
+</html>
